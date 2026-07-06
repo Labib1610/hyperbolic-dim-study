@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyperbolic-dim-study"
+version = "0.0.0"
+description = "A controlled study of dimension-distortion trade-offs of hyperbolic vs Euclidean embeddings of linguistic hierarchies (WordNet)."
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["src"]

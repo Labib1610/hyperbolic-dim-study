@@ -1,0 +1,13 @@
+# NOTE: torch/torchvision/torchaudio are NOT listed here.
+# They must be installed from the CUDA 12.8 (cu128) channel for the
+# RTX 5060 Ti (Blackwell / sm_120) GPU. See README.md for the exact command.
+geoopt>=0.5.0
+nltk>=3.8
+networkx>=3.0
+numpy>=1.24
+scipy>=1.10
+pyyaml>=6.0
+matplotlib>=3.7
+pandas>=2.0
+tqdm>=4.65
+pytest>=7.0

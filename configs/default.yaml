@@ -1,0 +1,31 @@
+seed: 42
+device: cuda
+paths:
+  data_dir: data
+  output_dir: outputs
+
+subtree: bfs_s50            # which subtree dir under data/subtrees/ to load
+
+train:
+  geometry: poincare        # poincare | euclidean
+  dim: 5
+  loss: distortion          # distortion | ranking | hybrid
+  hybrid_lambda: 1.0
+  n_negatives: 10
+  pairs_per_step: 512
+  full_pairs_threshold: 150 # if N <= this, use all pairs for the distortion loss
+  lr: 0.01
+  optimizer: radam          # radam (RiemannianAdam) for poincare; adam for euclidean
+  seed: 42
+
+  # --- fair training method (Stage 6 port; see Stages 5.5-5.8) ---
+  scale: learnable          # learnable | fixed  (fixed = old scale=1 behaviour)
+  stopping: convergence     # convergence (R2) | fixed_epochs
+  patience_epochs: 500      # R2: stop if val distortion doesn't improve for this long
+  min_delta_rel: 0.005      # R2: relative improvement threshold (0.5%)
+  epoch_cap: 8000           # R2: hard cap
+  fixed_epochs: 8000        # fixed_epochs mode: train exactly this many
+
+  # --- legacy keys (still honoured when stopping=fixed_epochs / scale=fixed) ---
+  epochs: 500               # legacy budget (used as fixed_epochs fallback)
+  early_stop_patience: 50   # legacy (unused under convergence stopping)
