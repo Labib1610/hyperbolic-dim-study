@@ -189,12 +189,14 @@ def fig_q2(plt, agg):
 # ---------------------------------------------------------------------------
 
 
-def fig_q3_rho_vs_dim(plt):
-    best = q3_lambda_best()
-    dims = sorted(best["dim"].unique())
+def fig_q3_rho_vs_dim(plt, fixed_lambda=5.0):
+    # ρ vs dim at a FIXED λ (=5) rather than best-λ, read straight from the sweep CSV.
+    agg = pd.read_csv(RESULTS / "q3_lambda_aggregated.csv")
+    s5 = agg[agg["lambda"] == fixed_lambda]
+    dims = sorted(int(d) for d in s5["dim"].unique())
     fig, ax = plt.subplots(figsize=SINGLE)
     for geom in ("poincare", "euclidean"):
-        s = best[best.geometry == geom].sort_values("dim")
+        s = s5[s5.geometry == geom].sort_values("dim")
         ax.plot(s["dim"], s["rho"], "-o", color=GEOM_COLORS[geom], label=GEOM_LABEL[geom])
         ax.fill_between(s["dim"], s["rho"] - s["rho_std"], s["rho"] + s["rho_std"],
                         color=GEOM_COLORS[geom], alpha=0.18)
